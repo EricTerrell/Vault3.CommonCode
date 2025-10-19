@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import commonCode.Base64Coder;
+import commonCode.Base64Utils;
 import commonCode.IPlatform.PlatformEnum;
 
 public class FontList implements Serializable {
@@ -135,12 +135,10 @@ public class FontList implements Serializable {
 			
 			byte[] serializedBytes = byteArrayOutputStream.toByteArray();
 			
-			char[] results = Base64Coder.encode(serializedBytes);
+			serializedText = Base64Utils.encodeToString(serializedBytes);
 			
 			byteArrayOutputStream.close();
 			objectOutputStream.close();
-			
-			serializedText = new String(results);
 		}
 		catch (Throwable ex) {
 			ex.printStackTrace();
@@ -160,7 +158,7 @@ public class FontList implements Serializable {
 		if (serializedText != null && !serializedText.isEmpty()) {
 			try
 			{
-				byte[] serializedBytes = Base64Coder.decode(serializedText);
+				byte[] serializedBytes = Base64Utils.decode(serializedText);
 				
 				ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(serializedBytes);
 				ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
